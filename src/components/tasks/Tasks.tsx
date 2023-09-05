@@ -9,12 +9,16 @@ interface Todo {
 
 const Tasks = () => {
     const [todos, setTodos] = useState<Todo[]>([]);
+    const [currentPage, setCurrentPage] = useState(1);
     useEffect(() => {
         axios
           .get("https://jsonplaceholder.typicode.com/todos")
           .then((response) => setTodos(response.data))
           .catch((error) => console.log(error));
       }, []);  
+
+      const itemsPerPage = 10;
+      const totalPages = Math.ceil(todos.length / itemsPerPage);
 
       const handleCheckbox = (id: number) => {
         setTodos((prevTodos) =>
@@ -24,11 +28,40 @@ const Tasks = () => {
         );
       };
 
+      const getPageTodos = () => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        return todos.slice(startIndex, endIndex);
+      };
+
+      const renderPageNumbers = () => {
+        const pageNumbers = [];
+      
+        for (let i = 1; i <= totalPages; i++) {
+          if (i <= 3 || (i >= currentPage - 1 && i <= currentPage + 1) || i > totalPages - 1) {
+            pageNumbers.push(
+              <span
+                key={i}
+                onClick={() => setCurrentPage(i)}
+                className={`cursor-pointer p-3 bg-gray-100 rounded-full mr-2 ${currentPage === i ? "font-bold bg-gray-200" : ""}`}
+              >
+                {i}
+              </span>
+            );
+          } else if (i >= 4 ) {
+            pageNumbers.push(<span key={i}>.</span>);
+          }
+        }      
+        return pageNumbers;
+      };
+       
+          
+
   return (
     <div className="px-4 lg:px-8 py-8">
         <h1 className='text-[16px] font-semibold pb-8'>My Tasks</h1>
         <ul>
-            {todos.map((todo) => {
+        {getPageTodos().map((todo) => {
                 return(
                     <li key={todo.id}>
                     <div className={`flex items-center mb-4 bg-gray-50 justify-between rounded-lg shadow-sm p-4 ${todo.completed ? 'opacity-50' : ''}`}>
@@ -46,7 +79,24 @@ const Tasks = () => {
                     </li>
                 )
             })}          
-        </ul>     
+        </ul>    
+        <div className='flex items-center justify-between pt-[5rem]'>
+        <button
+          onClick={() => setCurrentPage((prevPage) => prevPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <div className='w-[25%]'>
+        {renderPageNumbers()}
+        </div>
+        <button
+          onClick={() => setCurrentPage((prevPage) => prevPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </div> 
     </div>
   )
 }
