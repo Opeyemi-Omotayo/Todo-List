@@ -14,7 +14,7 @@ const DateList = () => {
   return (
     <div className="px-4 lg:px-8">
       <p className="text-sm font-semibold mb-4">{currentMonthYear}</p>
-      <ul className="flex space-x-3">
+      <ul className="flex space-x-3 overflow-hidden overflow-x-auto ">
         {dateArray.map((date, index) => (
           <li key={index} className="text-center ">
             <div className={`text-sm font-semibold w-[55px] py-2 text-grey rounded-lg shadow-sm border ${isToday(date) ? "bg-blue text-white" : ""

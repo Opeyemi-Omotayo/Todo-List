@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './components/header/Header';
 import DateList from './components/dateList/DateList';
+import Tasks from './components/tasks/Tasks';
 
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
     <div>
    <Header />
    <DateList />
+   <Tasks />
     </div>
   );
 }
