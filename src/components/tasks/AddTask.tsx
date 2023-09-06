@@ -15,7 +15,7 @@ const AddTask = () => {
                 id=""
                 rows={5}
                 value=""
-                className='bg-gray-50 border p-4 border-gray-300 rounded-lg shadow-sm outline-none'
+                className='bg-gray-50 border p-4 text-black border-gray-300 rounded-lg shadow-sm outline-none'
             />
             <div className='flex items-center justify-between py-4 text-grey'>
                 <div className='flex items-center rounded-lg shadow-sm border px-3 py-2'>
@@ -45,7 +45,7 @@ const AddTask = () => {
             </div>
             <div className='flex items-center justify-between'>
                 <div className='flex items-center text-grey text-base'>
-                    <AiOutlineBell className='mr-1'/>
+                    <AiOutlineBell className='mr-1' />
                     <p >10 minutes before</p>
                 </div>
 
