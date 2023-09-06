@@ -3,6 +3,7 @@ import Header from './components/header/Header';
 import DateList from './components/dateList/DateList';
 import Tasks from './components/tasks/Tasks';
 import Calender from './components/calender/Calender';
+import TaskDetails from './components/tasks/TaskDetails';
 
 
 function App() {
@@ -15,7 +16,8 @@ function App() {
           <Tasks />
         </div>
         <div className='w-[27%]'>
-          <Calender />
+          {/* <Calender /> */}
+          <TaskDetails />
         </div>
       </div>
     </div>
