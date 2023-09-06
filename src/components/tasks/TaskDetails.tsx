@@ -29,7 +29,6 @@ const TaskDetails = () => {
                 <button className='border rounded-lg shadow-sm w-[48%] py-2'>Delete</button>
                 <button className='bg-blue text-white shadow-sm rounded-lg w-[48%] py-2'>Edit</button>
             </div>
-
         </div>
     )
 }

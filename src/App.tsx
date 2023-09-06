@@ -4,6 +4,7 @@ import DateList from './components/dateList/DateList';
 import Tasks from './components/tasks/Tasks';
 import Calender from './components/calender/Calender';
 import TaskDetails from './components/tasks/TaskDetails';
+import AddTask from './components/tasks/AddTask';
 
 
 function App() {
@@ -17,7 +18,8 @@ function App() {
         </div>
         <div className='w-[27%]'>
           {/* <Calender /> */}
-          <TaskDetails />
+          {/* <TaskDetails /> */}
+          <AddTask />
         </div>
       </div>
     </div>
