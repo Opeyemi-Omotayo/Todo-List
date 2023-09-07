@@ -2,13 +2,27 @@ import React from 'react';
 import { TfiClose } from 'react-icons/tfi';
 import { AiOutlineCalendar, AiOutlineClockCircle } from 'react-icons/ai';
 
-const TaskDetails = () => {
+type Todo = {
+    id: number;
+    title: string;
+    completed: boolean;
+}
+
+type TaskDetailsProps = {
+    selectedTask: Todo | null;
+}
+
+const TaskDetails: React.FC<TaskDetailsProps> = ({ selectedTask }) => {
+    if (!selectedTask) {
+        return null;
+    }
+
     return (
         <div className='rounded-lg shadow-lg p-6 flex flex-col'>
-            <div className='flex items-end justify-end'>
+            <div className='flex items-end justify-end pb-2'>
                 <TfiClose className='font-bold text-lg text-black' />
             </div>
-            <h1 className='text-lg font-bold pb-8'>Create Wireframe</h1>
+            <h1 className='text-lg font-bold pb-8'>{selectedTask.title}</h1>
             <p className='flex items-center pb-2'>
                 <span className='text-blue mr-2'>
                     <AiOutlineCalendar />
