@@ -14,7 +14,12 @@ type Todo = {
 }
 
 function App() {
-  const [selectedTask, setSelectedTask] = useState<Todo | null>(null); 
+  const [selectedTask, setSelectedTask] = useState<Todo | null>(null);
+  const [editTaskVisible, setEditTaskVisible] = useState(false);
+
+  const toggleEditTaskVisibility = () => {
+    setEditTaskVisible(!editTaskVisible);
+  }; 
 
   return (
     <div>
@@ -26,7 +31,11 @@ function App() {
         </div>
         <div className='w-[29%] border-l pl-8'>
           <Calender /> 
-          <TaskDetails selectedTask={selectedTask}/>
+          {editTaskVisible ? (
+            <EditTask task={selectedTask} toggleVisibility={toggleEditTaskVisibility} />
+          ) : (
+            <TaskDetails selectedTask={selectedTask} toggleEdit={toggleEditTaskVisibility} />
+          )}
           {/* <AddTask /> */}
           {/* <EditTask /> */}
         </div>
