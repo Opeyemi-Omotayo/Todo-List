@@ -11,12 +11,19 @@ type Todo = {
 type TaskDetailsProps = {
     selectedTask: Todo | null;
     toggleEdit: () => void;
+    onDelete: (taskId: number) => void; 
 }
 
-const TaskDetails: React.FC<TaskDetailsProps> = ({ selectedTask, toggleEdit }) => {
+const TaskDetails: React.FC<TaskDetailsProps> = ({ selectedTask, toggleEdit, onDelete }) => {
     if (!selectedTask) {
         return null;
     }
+
+    const handleDeleteClick = () => {
+        if (selectedTask.id) {
+            onDelete(selectedTask.id);
+        }
+    };
 
     return (
         <div className='rounded-lg shadow-lg p-6 flex flex-col'>
@@ -41,7 +48,7 @@ const TaskDetails: React.FC<TaskDetailsProps> = ({ selectedTask, toggleEdit }) =
                 </span>
             </p>
             <div className='flex items-center justify-between pt-8'>
-                <button className='border rounded-lg shadow-sm w-[48%] py-2'>Delete</button>
+                <button onClick={handleDeleteClick} className='border rounded-lg shadow-sm w-[48%] py-2'>Delete</button>
                 <button onClick={toggleEdit} className='bg-blue text-white shadow-sm rounded-lg w-[48%] py-2'>Edit</button>
             </div>
         </div>
