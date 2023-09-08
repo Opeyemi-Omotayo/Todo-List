@@ -1,22 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { TfiClose } from 'react-icons/tfi';
 import { AiOutlineBell, AiOutlineCalendar, AiOutlineClockCircle } from 'react-icons/ai';
+import AppContext from '../../context/Index';
 
-type Todo = {
-    id: number;
-    title: string;
-    completed: boolean;
-}
 
-type EditTaskProps = {
-    task: Todo | null;
-    toggleVisibility: () => void;
-}
+const EditTask = () => {
+    const {toggleEditTaskVisibility, selectedTask} = useContext(AppContext);
+    const [editedTitle, setEditedTitle] = useState(selectedTask?.title || '');
 
-const EditTask: React.FC<EditTaskProps> = ({ task, toggleVisibility }) => {
-    const [editedTitle, setEditedTitle] = useState(task?.title || '');
-
-    if (!task) {
+    if (!selectedTask) {
         return null;
     }
 
@@ -72,7 +64,7 @@ const EditTask: React.FC<EditTaskProps> = ({ task, toggleVisibility }) => {
                 <TfiClose className='font-bold text-xs cursor-pointer' />
             </div>
             <div className='flex items-center justify-between pt-8'>
-                <button onClick={toggleVisibility} className='border rounded-lg shadow-sm w-[48%] py-2'>Cancel</button>
+                <button onClick={toggleEditTaskVisibility} className='border rounded-lg shadow-sm w-[48%] py-2'>Cancel</button>
                 <button className='bg-blue text-white shadow-sm rounded-lg w-[48%] py-2'>Save</button>
             </div>
 

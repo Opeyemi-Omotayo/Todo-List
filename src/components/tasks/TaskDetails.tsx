@@ -1,27 +1,18 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { TfiClose } from 'react-icons/tfi';
 import { AiOutlineCalendar, AiOutlineClockCircle } from 'react-icons/ai';
+import AppContext from '../../context/Index';
 
-type Todo = {
-    id: number;
-    title: string;
-    completed: boolean;
-}
 
-type TaskDetailsProps = {
-    selectedTask: Todo | null;
-    toggleEdit: () => void;
-    onDelete: (taskId: number) => void; 
-}
-
-const TaskDetails: React.FC<TaskDetailsProps> = ({ selectedTask, toggleEdit, onDelete }) => {
+const TaskDetails = () => {
+    const {deleteTask, toggleEditTaskVisibility, selectedTask} = useContext(AppContext);
     if (!selectedTask) {
         return null;
     }
 
     const handleDeleteClick = () => {
         if (selectedTask.id) {
-            onDelete(selectedTask.id);
+            deleteTask(selectedTask.id);
         }
     };
 
@@ -49,7 +40,7 @@ const TaskDetails: React.FC<TaskDetailsProps> = ({ selectedTask, toggleEdit, onD
             </p>
             <div className='flex items-center justify-between pt-8'>
                 <button onClick={handleDeleteClick} className='border rounded-lg shadow-sm w-[48%] py-2'>Delete</button>
-                <button onClick={toggleEdit} className='bg-blue text-white shadow-sm rounded-lg w-[48%] py-2'>Edit</button>
+                <button onClick={toggleEditTaskVisibility} className='bg-blue text-white shadow-sm rounded-lg w-[48%] py-2'>Edit</button>
             </div>
         </div>
     )

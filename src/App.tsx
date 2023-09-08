@@ -1,61 +1,36 @@
-import React, {useState} from 'react';
-import axios from 'axios';
-import Header from './components/header/Header';
-import DateList from './components/dateList/DateList';
-import Tasks from './components/tasks/Tasks';
-import Calender from './components/calender/Calender';
-import TaskDetails from './components/tasks/TaskDetails';
-import AddTask from './components/tasks/AddTask';
-import EditTask from './components/tasks/EditTask';
-import { ToastContainer, Slide, toast } from 'react-toastify';
+import React, { SetStateAction } from 'react';
+import { ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-type Todo = {
-  id: number;
-  title: string;
-  completed: boolean;
-}
+import { AppProvider } from './context/Index';
+import HomePage from './page/HomePage';
+import { Todo } from './types/types';
 
 function App() {
-  const [selectedTask, setSelectedTask] = useState<Todo | null>(null);
-  const [editTaskVisible, setEditTaskVisible] = useState(false);
-
-  const toggleEditTaskVisibility = () => {
-    setEditTaskVisible(!editTaskVisible);
-  };
-  
-  const deleteTask = (taskId:number) => {
-    axios
-      .delete(`https://jsonplaceholder.typicode.com/todos/${taskId}`)
-      .then((response) => {
-        if (response.status === 200) {
-          toast(`Task with the ID of ${taskId} deleted.`);
-          setSelectedTask(null);
-        } 
-      })
-      .catch((error) => {
-        toast(`Error deleting task: ${error}`);
-      });
-  };
-
   return (
     <div>
-      <Header />
-      <div className='flex'>
-        <div className='w-[68%]'>
-          <DateList />
-          <Tasks setSelectedTask={setSelectedTask}/>
-        </div>
-        <div className='w-[29%] border-l pl-8'>
-          <Calender /> 
-          {editTaskVisible ? (
-            <EditTask task={selectedTask} toggleVisibility={toggleEditTaskVisibility} />
-          ) : (
-            <TaskDetails selectedTask={selectedTask} toggleEdit={toggleEditTaskVisibility} onDelete={deleteTask}/>
-          )}
-          {/* <AddTask /> */}
-        </div>
-      </div>
+      <AppProvider 
+        toggleEditTaskVisibility={function ():void {
+          throw new Error("Unable to toggle edit task!")
+        }}
+        deleteTask={function (id: number): void {
+          throw new Error("Unable to delete task!");
+        }}
+        editTaskVisible= {false}
+        selectedTask= {null}
+        setSelectedTask={function (value: SetStateAction<Todo | null> ): void {
+          throw new Error("Function not implemented.");
+        } }
+        handleCheckbox={function (id: number): void {
+          throw new Error("Unable to toggle checkbox !");
+        }}       
+        handleTaskClick={function (id: number): void {
+          throw new Error("Unable to click task!");
+        }}
+        todos={[]}
+        >
+        <HomePage />
+      </AppProvider>
+
 
       <ToastContainer
         position="top-right"
