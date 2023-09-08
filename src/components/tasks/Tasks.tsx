@@ -60,7 +60,7 @@ const Tasks = () => {
           )
         })}
       </ul>
-      <div className='flex items-center justify-between pt-[5rem]'>
+      <div className='flex items-center justify-between pt-[3rem] lg:pt-[5rem] bottom-0'>
         <button
           onClick={() => setCurrentPage((prevPage) => prevPage - 1)}
           disabled={currentPage === 1}

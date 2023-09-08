@@ -16,12 +16,12 @@ const {editTaskVisible} = useContext(AppContext);
     <div>
       <Header />
         <div className='flex'>
-          <div className='w-[68%]'>
+          <div className='w-full lg:w-[68%] '>
             <DateList />
             <Tasks  />
             <MobileInput />
           </div>
-          <div className='w-[29%] border-l pl-8'>
+          <div className='hidden lg:w-[29%] border-l pl-8'>
             <Calender />
             {editTaskVisible ? (
               <EditTask   />

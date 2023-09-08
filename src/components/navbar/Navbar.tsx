@@ -29,18 +29,20 @@ const Navbar = () => {
                 <div className="lg:hidden flex justify-between border-b shadow-sm items-center p-4 ">
                     <ul
                         onClick={() => setNav(!nav)}
-                        className={`absolute top-[80px] z-20 bg-gray-50 items-center w-full left-0 py-10 h-full ${nav ? "block" : "hidden"
+                        className={`absolute top-[65px] z-20 bg-gray-50 items-center w-full left-0 py-10 h-full ${nav ? "block" : "hidden"
                             }`}
                     >
                         <div className="flex flex-col h-[20rem] text-lg  items-center justify-between">
-                            <li className="cursor-pointer bg-white  p-2 w-32 flex items-center justify-center rounded-full">
+                            <li className="cursor-pointer bg-white  py-2 px-4 flex items-center justify-center rounded-full">
                                 <img src="/assets/settings.png" alt="settings" width={45} />
+                                <span>Settings</span>
                             </li>
-                            <li className="cursor-pointer bg-white  p-2 w-32 flex items-center justify-center rounded-full">
+                            <li className="cursor-pointer bg-white  py-2 px-4 flex items-center justify-center rounded-full">
                                 <img src="/assets/notification.png" alt="notification" width={45} />
+                                <span>Notification</span>
                             </li>
                             <li className="cursor-pointer bg-black  p-2 w-32 flex items-center justify-center rounded-full">
-                                <img src="/assets/Avatar.png" alt="avatar"  width={45}/>
+                                <img src="/assets/Avatar.png" alt="avatar"  width={35}/>
                             </li>
                         </div>
                     </ul>
