@@ -5,7 +5,7 @@ import AppContext from '../../context/Index';
 
 
 const TaskDetails = () => {
-    const {deleteTask, toggleEditTaskVisibility, selectedTask} = useContext(AppContext);
+    const {deleteTask, toggleEditTaskVisibility, toggleAddTaskVisibility, selectedTask} = useContext(AppContext);
     if (!selectedTask) {
         return null;
     }
@@ -13,13 +13,14 @@ const TaskDetails = () => {
     const handleDeleteClick = () => {
         if (selectedTask.id) {
             deleteTask(selectedTask.id);
+            toggleAddTaskVisibility();
         }
     };
 
     return (
         <div className='rounded-lg shadow-lg p-6 flex flex-col'>
             <div className='flex items-end justify-end pb-2'>
-                <TfiClose className='font-bold text-lg text-black' />
+                <TfiClose className='font-bold text-lg text-black' onClick={toggleAddTaskVisibility}/>
             </div>
             <h1 className='text-lg font-bold pb-8'>{selectedTask.title}</h1>
             <p className='flex items-center pb-2'>

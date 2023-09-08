@@ -107,18 +107,10 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
   };
   
 
-  const deleteTask = (id: number | string) => {
-    axios
-      .delete(`${process.env.REACT_APP_BACKEND_URL}/${id}`)
-      .then((response) => {
-        if (response.status === 200) {
-          toast(`Task with the ID of ${id} deleted.`);
-          setSelectedTask(null);
-        }
-      })
-      .catch((error) => {
-        toast(`Error deleting task: ${error}`);
-      });
+  const deleteTask = (taskId: number | string) => {
+    setTodos((prevTodos) =>
+      prevTodos.filter((todo) => todo.id !== taskId)
+    );
   };
 
   const handleCheckbox = (id: number | string) => {
