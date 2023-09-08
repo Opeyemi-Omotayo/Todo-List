@@ -12,13 +12,18 @@ function App() {
         toggleEditTaskVisibility={function ():void {
           throw new Error("Unable to toggle edit task!")
         }}
+        toggleAddTaskVisibility={function ():void {
+          throw new Error("Unable to toggle add task!")
+        }}
         deleteTask={function (id: number): void {
           throw new Error("Unable to delete task!");
         }}
         editTaskVisible= {false}
+        addTaskVisible={false}
+        taskDetailsVisible={false}
         selectedTask= {null}
         setSelectedTask={function (value: SetStateAction<Todo | null> ): void {
-          throw new Error("Function not implemented.");
+          throw new Error("Unable to set task!");
         } }
         handleCheckbox={function (id: number): void {
           throw new Error("Unable to toggle checkbox !");

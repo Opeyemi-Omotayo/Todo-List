@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import AppContext from '../../context/Index';
+import { format } from 'date-fns';
 
 const Tasks = () => {
   const {handleCheckbox, handleTaskClick, todos} = useContext(AppContext);
@@ -34,7 +35,6 @@ const Tasks = () => {
     }
     return pageNumbers;
   };
-
   
 
   return (
@@ -49,11 +49,11 @@ const Tasks = () => {
                   <input type="checkbox" name="" id="" className='mr-3 w-[20px] h-[20px]' checked={todo.completed} onChange={() => handleCheckbox(todo.id)} />
                   <div>
                     <h1 className='text-sm font-medium'>{todo.title}</h1>
-                    <p className='text-sm font-[400]'>11:00 am - 11:30 am</p>
+                    <p className='text-sm font-[400]'>   {format(todo.fromTime || 0, 'HH:mm')} - {format(todo.toTime || 0, 'HH:mm')}</p>
                   </div>
                 </div>
                 <div>
-                  <h1 className='text-sm font-[400]'>Today</h1>
+                  <h1 className='text-sm font-[400]'>{format(todo.date || new Date(0), 'dd MMMM yyyy')}</h1>
                 </div>
               </div>
             </li>

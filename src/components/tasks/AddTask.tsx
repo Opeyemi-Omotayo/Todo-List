@@ -1,9 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { TfiClose } from 'react-icons/tfi';
 import { AiOutlineBell, AiOutlineCalendar, AiOutlineClockCircle } from 'react-icons/ai';
 
 
 const AddTask = () => {
+    const [input , setInput] = useState("");
+    
+    const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setInput(event.target.value);
+    }; 
 
     return (
         <div className='rounded-lg shadow-lg p-6 flex flex-col'>
@@ -14,7 +19,8 @@ const AddTask = () => {
             <textarea
                 id=""
                 rows={5}
-                value=""
+                value={input}
+                onChange={handleInputChange}
                 className='bg-gray-50 border p-4 text-black border-gray-300 rounded-lg shadow-sm outline-none'
             />
             <div className='flex items-center justify-between py-4 text-grey'>
