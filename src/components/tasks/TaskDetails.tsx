@@ -28,7 +28,7 @@ const TaskDetails = () => {
                     <AiOutlineCalendar />
                 </span>
                 <span className='font-medium text-base'>
-                    20th January, 2023
+                    {selectedTask.date}
                 </span>
             </p>
             <p className='flex items-center '>
@@ -36,7 +36,7 @@ const TaskDetails = () => {
                     <AiOutlineClockCircle />
                 </span>
                 <span className='font-medium text-base'>
-                    11:00am - 11:30am
+                    {selectedTask.fromTime} - {selectedTask.toTime}
                 </span>
             </p>
             <div className='flex items-center justify-between pt-8'>
