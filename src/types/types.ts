@@ -1,10 +1,10 @@
 export type Todo = {
-    id: number;
+    id: number | string;
     title: string;
     completed: boolean;
-    date?: Date | number,
-    fromTime?: Date | number,
-    toTime?:  Date | number,
+    date?: any,
+    fromTime?:any,
+    toTime?:  any,
     userId: number
 }
 
@@ -12,13 +12,14 @@ export interface AppContextProp {
     children?: React.ReactNode,
     toggleEditTaskVisibility: () => void,
     toggleAddTaskVisibility: () => void,
-    deleteTask: (id: number) => void,
+    deleteTask: (id: number | string) => void,
     editTaskVisible?: boolean,
     taskDetailsVisible?: boolean,
     addTaskVisible?: boolean,
     selectedTask?: Todo | null,
     setSelectedTask: React.Dispatch<React.SetStateAction<Todo | null>>,
-    handleCheckbox: (id: number) => void,
-    handleTaskClick: (id: number) => void,
+    handleCheckbox: (id: number | string) => void,
+    handleTaskClick: (id: number | string) => void,
     todos: Todo[],
+    addTask : (title: string, fromTime: Date | number | string, toTime:Date | number | string, date: any) => void,
 }

@@ -15,7 +15,7 @@ function App() {
         toggleAddTaskVisibility={function ():void {
           throw new Error("Unable to toggle add task!")
         }}
-        deleteTask={function (id: number): void {
+        deleteTask={function (id: number | string): void {
           throw new Error("Unable to delete task!");
         }}
         editTaskVisible= {false}
@@ -25,13 +25,16 @@ function App() {
         setSelectedTask={function (value: SetStateAction<Todo | null> ): void {
           throw new Error("Unable to set task!");
         } }
-        handleCheckbox={function (id: number): void {
+        handleCheckbox={function (id: number | string): void {
           throw new Error("Unable to toggle checkbox !");
         }}       
-        handleTaskClick={function (id: number): void {
+        handleTaskClick={function (id: number | string): void {
           throw new Error("Unable to click task!");
         }}
         todos={[]}
+        addTask={function (title: string,fromTime:  Date | number | string,toTime:  Date | number | string,date: any ): void {
+          throw new Error("Unable to add Task!");
+        } }
         >
         <HomePage />
       </AppProvider>

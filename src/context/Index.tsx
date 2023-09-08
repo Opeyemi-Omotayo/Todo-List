@@ -1,4 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
+import { v4 as uuidv4 } from 'uuid';
+import { format } from 'date-fns';
 import axios from "axios";
 import { Todo, AppContextProp } from "../types/types";
 import { toast } from "react-toastify";
@@ -20,14 +22,17 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
     const randomDate =
       Math.floor(Math.random() * (endTime - startTime + 1)) +
       startTime;
-    return new Date(randomDate);
+      const date = format(new Date(randomDate), 'yyyy-MM-dd')
+    return date;
   }
 
   const getRandomTime = () => {
     const hours = Math.floor(Math.random() * 24);
     const minutes = Math.floor(Math.random() * 60);
-    const seconds = Math.floor(Math.random() * 60);
-    return new Date(0, 0, 0, hours, minutes, seconds);
+    const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}`;
+    return formattedTime;
   }
 
   useEffect(() => {
@@ -48,13 +53,6 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
-  useEffect(() => {
-    const data = localStorage.getItem("todos");
-    if(data){
-      setTodos(JSON.parse(data));
-    }    
-  }, []);
-
 
   const toggleEditTaskVisibility = () => {
     setEditTaskVisible(true);
@@ -68,16 +66,32 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
     setTaskDetailsVisible(false);
   };
 
-  const addTask =() => {
-    
+  const addTask =(
+    title: string,
+    fromTime: Date | number | string,
+    toTime: Date | number | string,
+    date: any
+    ) => {
+      setTodos([
+        ...todos,
+        {
+          id: uuidv4(),
+          userId: Math.floor(Math.random() * 5) + 1,
+          title: title,
+          fromTime: fromTime,
+          toTime: toTime,
+          date: date,
+          completed: false,
+        },
+      ]);
   }
 
-  const deleteTask = (taskId: number) => {
+  const deleteTask = (id: number | string) => {
     axios
-      .delete(`${process.env.REACT_APP_BACKEND_URL}/${taskId}`)
+      .delete(`${process.env.REACT_APP_BACKEND_URL}/${id}`)
       .then((response) => {
         if (response.status === 200) {
-          toast(`Task with the ID of ${taskId} deleted.`);
+          toast(`Task with the ID of ${id} deleted.`);
           setSelectedTask(null);
         }
       })
@@ -86,7 +100,7 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
       });
   };
 
-  const handleCheckbox = (id: number) => {
+  const handleCheckbox = (id: number | string) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
@@ -94,7 +108,7 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
     );
   };
 
-  const handleTaskClick = (id: number) => {
+  const handleTaskClick = (id: number | string) => {
     const task = todos.find((todo) => todo.id === id);
     if (task) {
       setSelectedTask(task);
@@ -116,6 +130,7 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
     handleCheckbox,
     handleTaskClick,
     todos,
+    addTask,
   };
   return (
     <AppContext.Provider value={contextData}>{children}</AppContext.Provider>
