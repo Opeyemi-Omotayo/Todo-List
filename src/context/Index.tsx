@@ -44,6 +44,17 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
       .catch((error) => console.log(error));
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
+
+  useEffect(() => {
+    const data = localStorage.getItem("todos");
+    if(data){
+      setTodos(JSON.parse(data));
+    }    
+  }, []);
+
 
   const toggleEditTaskVisibility = () => {
     setEditTaskVisible(true);
@@ -57,6 +68,9 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
     setTaskDetailsVisible(false);
   };
 
+  const addTask =() => {
+    
+  }
 
   const deleteTask = (taskId: number) => {
     axios
