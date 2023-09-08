@@ -22,4 +22,5 @@ export interface AppContextProp {
     handleTaskClick: (id: number | string) => void,
     todos: Todo[],
     addTask : (title: string, fromTime: Date | number | string, toTime:Date | number | string, date: any) => void,
+    editTask:(taskId: number | string, updatedTask: Partial<Todo>) => void
 }

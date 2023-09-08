@@ -35,6 +35,9 @@ function App() {
         addTask={function (title: string,fromTime:  Date | number | string,toTime:  Date | number | string,date: any ): void {
           throw new Error("Unable to add Task!");
         } }
+        editTask={function(taskId: number | string, updatedTask: Partial<Todo>) : void {
+          throw new Error("Unable to edit task!");
+        }}
         >
         <HomePage />
       </AppProvider>

@@ -22,8 +22,8 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
     const randomDate =
       Math.floor(Math.random() * (endTime - startTime + 1)) +
       startTime;
-      const date = format(new Date(randomDate), 'yyyy-MM-dd')
-    return date;
+      const formattedDate = format(new Date(randomDate), 'yyyy-MM-dd')
+    return formattedDate;
   }
 
   const getRandomTime = () => {
@@ -53,6 +53,18 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
+  const sortArray = () => {
+    let sortedArray = todos?.sort((a: Todo, b: Todo) => {
+      const dateA: Date = new Date(a.date);
+      const dateB: Date = new Date(b.date);
+      return dateB.getTime() - dateA.getTime();
+    });
+    return sortedArray;
+  };
+  
+    useEffect(()=> {
+      sortArray()
+    },[todos])
 
   const toggleEditTaskVisibility = () => {
     setEditTaskVisible(true);
@@ -75,7 +87,7 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
       setTodos([
         ...todos,
         {
-          id: uuidv4(),
+          id: uuidv4() ,
           userId: Math.floor(Math.random() * 5) + 1,
           title: title,
           fromTime: fromTime,
@@ -85,6 +97,15 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
         },
       ]);
   }
+
+  const editTask = (taskId: number | string, updatedTask: Partial<Todo>) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) =>
+        todo.id === taskId ? { ...todo, ...updatedTask } : todo
+      )
+    );
+  };
+  
 
   const deleteTask = (id: number | string) => {
     axios
@@ -131,6 +152,7 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
     handleTaskClick,
     todos,
     addTask,
+    editTask,
   };
   return (
     <AppContext.Provider value={contextData}>{children}</AppContext.Provider>

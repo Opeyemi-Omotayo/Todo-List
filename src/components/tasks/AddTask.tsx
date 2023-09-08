@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { TfiClose } from 'react-icons/tfi';
 import { AiOutlineBell } from 'react-icons/ai';
 import AppContext from '../../context/Index';
+import { toast } from 'react-toastify';
 
 
 const AddTask = () => {
@@ -9,10 +10,26 @@ const AddTask = () => {
     const [toTime, setToTime] = useState("");
     const [fromTime, setFromTime] = useState("");
     const [date, setDate] = useState("");
-    const {addTask} = useContext(AppContext);
+    const { addTask } = useContext(AppContext);
 
-    const handleAddTask =() => {
+    const handleAddTask = () => {
+        if (!title) {
+            toast("please enter a title!")
+            return;
+        } 
+        if (!toTime || !fromTime) {
+            toast("please enter time!");
+            return;
+        }  
+        if(!date){
+            toast("please enter date!");
+            return;
+        }
         addTask(title, toTime, fromTime, date);
+        setTitle("");
+        setFromTime("");
+        setToTime("");
+        setDate("");
     }
 
 
