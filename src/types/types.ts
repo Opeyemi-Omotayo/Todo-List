@@ -23,6 +23,13 @@ export interface AppContextProp {
     todos: Todo[],
     addTask : (title: string, fromTime: Date | number | string, toTime:Date | number | string, date: any) => void,
     editTask:(taskId: number | string, updatedTask: Partial<Todo>) => void,
+    isAddTaskModalOpen: boolean,
     closeSheet: () => void,
     snapPoints: number[],
+    isEditTaskModalOpen: boolean,
+    isTaskDetailsModalOpen: boolean,
+    formatTime: (timeString:any) => any,
+    loading: boolean,
+    color: any,
+
 }

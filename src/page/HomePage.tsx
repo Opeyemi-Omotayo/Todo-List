@@ -14,7 +14,7 @@ import Sheet from 'react-modal-sheet';
 
 
 const HomePage = () => {
-  const { editTaskVisible, addTaskVisible, taskDetailsVisible, snapPoints, closeSheet  } = useContext(AppContext);
+  const { editTaskVisible, addTaskVisible, taskDetailsVisible, snapPoints, closeSheet,isTaskDetailsModalOpen ,isAddTaskModalOpen, isEditTaskModalOpen  } = useContext(AppContext);
   const [selectedDate, setSelectedDate] = useState(startOfDay(new Date()));
 
   return (
@@ -23,16 +23,16 @@ const HomePage = () => {
         data-testid='bottom-sheet'
         disableDrag
         className='lg:hidden'
-        isOpen={addTaskVisible || editTaskVisible || taskDetailsVisible}
+        isOpen={isAddTaskModalOpen || isEditTaskModalOpen || isTaskDetailsModalOpen}
         onClose={closeSheet}
         snapPoints={snapPoints}
         initialSnap={1}
       >
         <Sheet.Container className='rounded-3xl'>
           <Sheet.Content>
-          {taskDetailsVisible && <TaskDetails />}
-          {addTaskVisible && <AddTask />}
-          {editTaskVisible && <EditTask />}
+          {isTaskDetailsModalOpen && <TaskDetails />}
+          {isAddTaskModalOpen && <AddTask />}
+          {isEditTaskModalOpen && <EditTask />}
           </Sheet.Content>
         </Sheet.Container>
         <Sheet.Backdrop />

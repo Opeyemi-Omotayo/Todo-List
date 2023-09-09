@@ -5,7 +5,7 @@ import AppContext from '../../context/Index';
 
 
 const TaskDetails = () => {
-    const {deleteTask, toggleEditTaskVisibility, toggleAddTaskVisibility, selectedTask, closeSheet} = useContext(AppContext);
+    const {deleteTask, toggleEditTaskVisibility, toggleAddTaskVisibility, selectedTask, closeSheet, formatTime} = useContext(AppContext);
     if (!selectedTask) {
         return null;
     }
@@ -13,6 +13,7 @@ const TaskDetails = () => {
     const handleDeleteClick = () => {
         if (selectedTask.id) {
             deleteTask(selectedTask.id);
+            closeSheet();
             toggleAddTaskVisibility();
         }
     };
@@ -63,7 +64,7 @@ const TaskDetails = () => {
                     <AiOutlineClockCircle />
                 </span>
                 <span className='text-base font-medium'>
-                    {selectedTask.fromTime} - {selectedTask.toTime}
+                    {formatTime(selectedTask.fromTime)} - {formatTime(selectedTask.toTime)}
                 </span>
             </p>
             <div className='flex items-center justify-between pt-8'>

@@ -1,9 +1,16 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, CSSProperties } from 'react';
 import AppContext from '../../context/Index';
-// import { format } from 'date-fns';
+import ClipLoader from "react-spinners/ClipLoader";
+
+
+const override: CSSProperties = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+};
 
 const Tasks = () => {
-  const {handleCheckbox, handleTaskClick, todos} = useContext(AppContext);
+  const {handleCheckbox, handleTaskClick, todos, formatTime, loading, color} = useContext(AppContext);
   const [currentPage, setCurrentPage] = useState(1);
 
     const itemsPerPage = 10;
@@ -15,41 +22,28 @@ const Tasks = () => {
     return todos.slice(startIndex, endIndex);
   };
 
-  const renderPageNumbers = () => {
-    const pageNumbers = [];
-
-    for (let i = 1; i <= totalPages; i++) {
-      if (i <= 3 || (i >= currentPage - 1 && i <= currentPage + 1) || i > totalPages - 1) {
-        pageNumbers.push(
-          <span
-            key={i}
-            onClick={() => setCurrentPage(i)}
-            className={`cursor-pointer p-3 bg-gray-100 rounded-full mr-2 ${currentPage === i ? "font-bold bg-gray-200" : ""}`}
-          >
-            {i}
-          </span>
-        );
-      } else if (i >= 4) {
-        pageNumbers.push(<span key={i}>.</span>);
-      }
-    }
-    return pageNumbers;
-  };
-  
 
   return (
     <div className="px-4 py-8 lg:px-8">
       <h1 className='text-[16px] font-semibold pb-8'>My Tasks</h1>
+      <ClipLoader
+        color={color}
+        loading={loading}
+        cssOverride={override}
+        size={150}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />
       <ul>
         {getTodosPage().map((todo) => {
           return (
-            <li key={todo.id} onClick={() => handleTaskClick(todo.id)}>
+            <li key={todo.id} onClick={() => handleTaskClick(todo.id)  }>
               <div className={`flex items-center mb-4 bg-gray-50 justify-between hover:bg-gray-200 rounded-lg shadow-sm p-4 ${todo.completed ? 'opacity-50 line-through' : ''}`}>
                 <div className='flex items-center '>
                   <input type="checkbox" name="" id="" className='mr-3 w-[20px] h-[20px]' checked={todo.completed} onChange={() => handleCheckbox(todo.id)} />
                   <div>
                     <h1 className='text-sm font-medium'>{todo.title}</h1>
-                    <p className='text-sm font-[400]'> {todo.fromTime} - {todo.toTime }</p>
+                    <p className='text-sm font-[400]'> {formatTime(todo.fromTime)} - {formatTime(todo.toTime)}</p>
                   </div>
                 </div>
                 <div>
@@ -60,7 +54,7 @@ const Tasks = () => {
           )
         })}
       </ul>
-      <div className='flex items-center justify-between pt-[3rem] lg:pt-[5rem] bottom-0'>
+      <div className='flex items-center justify-between pt-[3rem] pb-[5rem] lg:pt-[5rem]'>
         <button
           onClick={() => setCurrentPage((prevPage) => prevPage - 1)}
           disabled={currentPage === 1}
@@ -68,7 +62,7 @@ const Tasks = () => {
           Previous
         </button>
         <div className='w-[25%]'>
-          {renderPageNumbers()}
+        <span>Page {currentPage} of {totalPages}</span>
         </div>
         <button
           onClick={() => setCurrentPage((prevPage) => prevPage + 1)}

@@ -1,8 +1,9 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, CSSProperties } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import { format } from 'date-fns';
+import { format, set } from 'date-fns';
 import axios from "axios";
 import { Todo, AppContextProp } from "../types/types";
+import { toast } from "react-toastify";
 const AppContext = createContext<AppContextProp>(null!);
 
 export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
@@ -11,17 +12,24 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
   const [addTaskVisible, setAddTaskVisible] = useState(false);
   const [taskDetailsVisible, setTaskDetailsVisible] = useState(false);
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
+  const [isEditTaskModalOpen, setIsEditTaskModalOpen] = useState(false);
+  const [isTaskDetailsModalOpen, setIsTaskDetailsModalOpen] = useState(false);
   const [snapPoints, setSnapPoints] = useState([1, 0.85]);
+  const [loading, setLoading] = useState(true);
+  const [color, setColor] = useState("#ffffff");
+
+
 
 
   const closeSheet = () => {
-setAddTaskVisible(false); 
-setEditTaskVisible(false);
-setTaskDetailsVisible(false);  
+    setIsAddTaskModalOpen(false);
+    setIsEditTaskModalOpen(false);
+    setIsTaskDetailsModalOpen(false);
   };
 
-  const getRandomDate = () =>{
-    const startDate = new Date(2023, 7, 1); 
+  const getRandomDate = () => {
+    const startDate = new Date(2023, 7, 1);
     const endDate = new Date(2023, 7, 31);
 
     const startTime = startDate.getTime();
@@ -29,7 +37,7 @@ setTaskDetailsVisible(false);
     const randomDate =
       Math.floor(Math.random() * (endTime - startTime + 1)) +
       startTime;
-      const formattedDate = format(new Date(randomDate), 'yyyy-MM-dd')
+    const formattedDate = format(new Date(randomDate), 'yyyy-MM-dd')
     return formattedDate;
   }
 
@@ -45,14 +53,17 @@ setTaskDetailsVisible(false);
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_BACKEND_URL}`)
-      .then((response) => setTodos(
+      .then((response) => {
+      setLoading(!loading)
+      setColor("#3F5BF6")
+      setTodos(
         response.data.map((todo: Todo) => ({
           ...todo,
           date: getRandomDate(),
-          fromTime : getRandomTime(),
+          fromTime: getRandomTime(),
           toTime: getRandomTime()
         }))
-      ))
+              )})
       .catch((error) => console.log(error));
   }, []);
 
@@ -68,43 +79,55 @@ setTaskDetailsVisible(false);
     });
     return sortedArray;
   };
-  
-    useEffect(()=> {
-      sortArray()
-    },[todos])
+
+  useEffect(() => {
+    sortArray()
+  }, [todos])
 
   const toggleEditTaskVisibility = () => {
+    if (window.innerWidth >= 1024) {
     setEditTaskVisible(true);
     setAddTaskVisible(false);
     setTaskDetailsVisible(false);
+    } else{
+      setIsEditTaskModalOpen(true);
+    setIsAddTaskModalOpen(false);
+    setIsTaskDetailsModalOpen(false);
     setSnapPoints([1, 0.55]);
+    }
   };
 
   const toggleAddTaskVisibility = () => {
-    setAddTaskVisible(true);
+    if (window.innerWidth >= 1024) {
+      setAddTaskVisible(true);
     setEditTaskVisible(false);
     setTaskDetailsVisible(false);
+    } else {
+      setIsAddTaskModalOpen(true);
+    setIsEditTaskModalOpen(false);
+    setIsTaskDetailsModalOpen(false);
     setSnapPoints([1, 0.55]);
+    }
   };
 
-  const addTask =(
+  const addTask = (
     title: string,
     fromTime: Date | number | string,
     toTime: Date | number | string,
     date: any
-    ) => {
-      setTodos([
-        ...todos,
-        {
-          id: uuidv4() ,
-          userId: Math.floor(Math.random() * 5) + 1,
-          title: title,
-          fromTime: fromTime,
-          toTime: toTime,
-          date: date,
-          completed: false,
-        },
-      ]);
+  ) => {
+    setTodos([
+      ...todos,
+      {
+        id: uuidv4(),
+        userId: Math.floor(Math.random() * 5) + 1,
+        title: title,
+        fromTime: fromTime,
+        toTime: toTime,
+        date: date,
+        completed: false,
+      },
+    ]);
   }
 
   const editTask = (taskId: number | string, updatedTask: Partial<Todo>) => {
@@ -114,7 +137,7 @@ setTaskDetailsVisible(false);
       )
     );
   };
-  
+
 
   const deleteTask = (taskId: number | string) => {
     setTodos((prevTodos) =>
@@ -135,11 +158,28 @@ setTaskDetailsVisible(false);
     if (task) {
       setSelectedTask(task);
     }
+    if (window.innerWidth >= 1024) {
     setTaskDetailsVisible(true);
     setEditTaskVisible(false);
     setAddTaskVisible(false);
+    } else{
+      setIsTaskDetailsModalOpen(true);
+    setIsEditTaskModalOpen(false);
+    setIsAddTaskModalOpen(false);
     setSnapPoints([1, 0.55]);
+    }
   };
+
+  const formatTime = (timeString:any) => {
+    const time = new Date(`2000-01-01T${timeString}`);
+    const hours = time.getHours();
+    const minutes = time.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 || 12;
+
+    return `${formattedHours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+  };
+  
 
   const contextData = {
     deleteTask,
@@ -155,9 +195,14 @@ setTaskDetailsVisible(false);
     todos,
     addTask,
     editTask,
+    isAddTaskModalOpen,
     snapPoints,
     closeSheet,
-    
+    isEditTaskModalOpen,
+    isTaskDetailsModalOpen,
+    formatTime,
+    loading,
+    color,
   };
   return (
     <AppContext.Provider value={contextData}>{children}</AppContext.Provider>

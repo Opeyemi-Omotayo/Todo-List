@@ -38,10 +38,18 @@ function App() {
         editTask={function(taskId: number | string, updatedTask: Partial<Todo>) : void {
           throw new Error("Unable to edit task!");
         }}
+        isAddTaskModalOpen={false}
         snapPoints={[]}
         closeSheet={function ():void {
           throw new Error("Unable to close add task modal!")
         }}
+        isEditTaskModalOpen={false}
+        isTaskDetailsModalOpen={false}
+        formatTime={function(timeString: any) : void {
+          throw new Error("Unable to format time!");
+        }}
+        loading={false}
+        color={undefined}
         >
         <HomePage />
       </AppProvider>
