@@ -38,14 +38,14 @@ const Tasks = () => {
   
 
   return (
-    <div className="px-4 lg:px-8 py-8">
+    <div className="px-4 py-8 lg:px-8">
       <h1 className='text-[16px] font-semibold pb-8'>My Tasks</h1>
       <ul>
         {getTodosPage().map((todo) => {
           return (
             <li key={todo.id} onClick={() => handleTaskClick(todo.id)}>
-              <div className={`flex items-center mb-4 bg-gray-50 justify-between hover:bg-gray-200 rounded-lg shadow-sm p-4 ${todo.completed ? 'opacity-50' : ''}`}>
-                <div className='flex items-center'>
+              <div className={`flex items-center mb-4 bg-gray-50 justify-between hover:bg-gray-200 rounded-lg shadow-sm p-4 ${todo.completed ? 'opacity-50 line-through' : ''}`}>
+                <div className='flex items-center '>
                   <input type="checkbox" name="" id="" className='mr-3 w-[20px] h-[20px]' checked={todo.completed} onChange={() => handleCheckbox(todo.id)} />
                   <div>
                     <h1 className='text-sm font-medium'>{todo.title}</h1>
@@ -53,7 +53,7 @@ const Tasks = () => {
                   </div>
                 </div>
                 <div>
-                  <h1 className='text-sm font-[400]'>{new Date(todo.date).toDateString()}</h1>
+                  <h1 className='text-xs font-[400]'>{todo.date === new Date().toISOString().slice(0, 10) ? 'Today' : new Date(todo.date).toDateString()}</h1>
                 </div>
               </div>
             </li>

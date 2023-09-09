@@ -67,7 +67,7 @@ export const Calender = ({
           </button>
         </div>
         <div className='flex items-center justify-between '>
-          <p className='w-[68%] text-grey shadow-sm border-gray-500 p-[8px_14px_8px_14px] border rounded-[8px]'>
+          <p className='w-[68%] text-grey shadow-sm border-gray-200 p-[8px_14px_8px_14px] border rounded-[8px]'>
             {format(selectedDate, "MMM d, yyyy")}
           </p>
           <button
@@ -75,7 +75,7 @@ export const Calender = ({
               setSelectedDate(startOfDay(new Date()));
               setCurrentMonth(new Date());
             }}
-            className='button-transparent shadow-sm text-grey- w-[28%] border-gray-500 p-[8px_14px_8px_14px] border rounded-[8px] '
+            className='button-transparent shadow-sm text-grey- w-[28%] border-gray-200 p-[8px_14px_8px_14px] border rounded-[8px] '
           >
             Today
           </button>

@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { format } from 'date-fns';
 import axios from "axios";
 import { Todo, AppContextProp } from "../types/types";
-import { toast } from "react-toastify";
 const AppContext = createContext<AppContextProp>(null!);
 
 export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
@@ -12,6 +11,14 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
   const [addTaskVisible, setAddTaskVisible] = useState(false);
   const [taskDetailsVisible, setTaskDetailsVisible] = useState(false);
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [snapPoints, setSnapPoints] = useState([1, 0.85]);
+
+
+  const closeSheet = () => {
+setAddTaskVisible(false); 
+setEditTaskVisible(false);
+setTaskDetailsVisible(false);  
+  };
 
   const getRandomDate = () =>{
     const startDate = new Date(2023, 7, 1); 
@@ -70,12 +77,14 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
     setEditTaskVisible(true);
     setAddTaskVisible(false);
     setTaskDetailsVisible(false);
+    setSnapPoints([1, 0.55]);
   };
 
   const toggleAddTaskVisibility = () => {
     setAddTaskVisible(true);
     setEditTaskVisible(false);
     setTaskDetailsVisible(false);
+    setSnapPoints([1, 0.55]);
   };
 
   const addTask =(
@@ -129,6 +138,7 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
     setTaskDetailsVisible(true);
     setEditTaskVisible(false);
     setAddTaskVisible(false);
+    setSnapPoints([1, 0.55]);
   };
 
   const contextData = {
@@ -145,6 +155,9 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
     todos,
     addTask,
     editTask,
+    snapPoints,
+    closeSheet,
+    
   };
   return (
     <AppContext.Provider value={contextData}>{children}</AppContext.Provider>

@@ -38,6 +38,10 @@ function App() {
         editTask={function(taskId: number | string, updatedTask: Partial<Todo>) : void {
           throw new Error("Unable to edit task!");
         }}
+        snapPoints={[]}
+        closeSheet={function ():void {
+          throw new Error("Unable to close add task modal!")
+        }}
         >
         <HomePage />
       </AppProvider>

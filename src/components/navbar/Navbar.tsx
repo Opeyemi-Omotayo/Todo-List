@@ -7,7 +7,7 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="font-mono">
+            <nav className="font-mono ">
                 <div className="lg:flex hidden border-b shadow-sm  py-6 px-8 text-black items-center justify-between">
                     <div className="flex items-center">
                         <h1 className="text-2xl font-bold">ToDo</h1>
