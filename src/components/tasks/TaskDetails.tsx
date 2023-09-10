@@ -50,7 +50,7 @@ const TaskDetails = () => {
         </div>
         <div className='flex-col hidden p-6 rounded-lg shadow-lg lg:flex '>
             <div className='flex items-end justify-end pb-2'>
-                <TfiClose className='text-lg font-bold text-black cursor-pointer' onClick={toggleAddTaskVisibility}/>
+                <TfiClose className='text-lg font-bold text-black cursor-pointer' onClick={showCalender}/>
             </div>
             <h1 className='pb-8 text-lg font-bold'>{selectedTask.title}</h1>
             <p className='flex items-center pb-2'>
