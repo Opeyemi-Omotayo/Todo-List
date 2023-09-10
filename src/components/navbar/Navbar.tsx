@@ -7,7 +7,7 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="font-mono ">
+            <nav className="font-workSans ">
                 <div className="items-center justify-between hidden px-8 py-6 text-black border-b shadow-sm lg:flex xl:px-16">
                     <div className="flex items-center">
                         <h1 className="text-2xl font-bold">ToDo</h1>
@@ -47,6 +47,7 @@ const Navbar = () => {
                         </div>
                     </ul>
                     <div className="flex items-center ">
+                        <img src="/assets/logo.png" alt="logo" width={45} className='mr-2'/>
                         <h1 className="text-2xl font-bold">ToDo</h1>
                     </div>
                     <div

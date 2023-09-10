@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react';
 import { startOfDay } from 'date-fns';
 import Header from '../components/header/Header';
 import DateList from '../components/dateList/DateList';
-import Tasks from '../components/tasks/Tasks';
 import EditTask from '../components/tasks/EditTask';
 import TaskDetails from '../components/tasks/TaskDetails';
 import AddTask from '../components/tasks/AddTask';
@@ -10,6 +9,7 @@ import AppContext from '../context/Index';
 import MobileInput from '../components/mobileInput/MobileInput';
 import { Calender } from '../components/calender/Calender';
 import Sheet from 'react-modal-sheet';
+import Pagination from '../components/pagination/Pagination';
 
 
 
@@ -42,7 +42,7 @@ const HomePage = () => {
       <div className='flex' >
         <div className='w-full lg:w-[68%] '>
           <DateList setSelectedDate={setSelectedDate} date={selectedDate}/>
-          <Tasks />
+          <Pagination />
           <MobileInput />
         </div>
         <div className='hidden lg:block lg:w-[29%] border-l pl-8 xl:pr-6'>

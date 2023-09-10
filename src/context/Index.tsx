@@ -56,15 +56,6 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
     return formattedTime;
   }
 
-  // const sortArray = useCallback(() => {
-  //   const sortedArray = todos?.sort((a: Todo, b: Todo) => {
-  //     const dateA: Date = new Date(a.date);
-  //     const dateB: Date = new Date(b.date);
-  //     return dateB.getTime() - dateA.getTime();
-  //   });
-  //   return sortedArray;
-  // }, []);
-
   const sortArray = (todos:any) => {
     let sortedArray = todos?.sort((a: Todo, b: Todo) => {
       const dateA: Date = new Date(a.date);
@@ -160,11 +151,13 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
   };
 
   const editTask = (taskId: number | string, updatedTask: Partial<Todo>) => {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) =>
+    setTodos((prevTodos) => {
+      const updatedTodos = prevTodos.map((todo) =>
         todo.id === taskId ? { ...todo, ...updatedTask } : todo
-      )
-    );
+      );
+      const sortedUpdatedTodos = sortArray(updatedTodos);
+      return sortedUpdatedTodos;
+    });
   };
 
 
