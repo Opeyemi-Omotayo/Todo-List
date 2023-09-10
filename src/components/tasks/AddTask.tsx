@@ -56,20 +56,20 @@ const AddTask = () => {
                             type="date"
                             value={date}
                             onChange={(e) => { setDate(e.target.value); }}
-                            className='flex  cursor-pointer text-xs items-center rounded-lg shadow-sm border px-3 py-2' />
+                            className='flex w-[32%]  cursor-pointer text-xs items-center rounded-lg shadow-sm border px-3 py-2' />
 
                         <input
                             onChange={(e) => { setFromTime(e.target.value); }}
                             type="time"
                             value={fromTime}
-                            className="flex cursor-pointer text-xs items-center rounded-lg shadow-sm border px-3 py-2"
+                            className="flex w-[32%] cursor-pointer text-xs items-center rounded-lg shadow-sm border px-3 py-2"
                         />
 
                         <input
                             onChange={(e) => { setToTime(e.target.value); }}
                             type="time"
                             value={toTime}
-                            className="flex  cursor-pointer text-xs items-center rounded-lg shadow-sm border px-3 py-2"
+                            className="flex w-[32%] cursor-pointer text-xs items-center rounded-lg shadow-sm border px-3 py-2"
                         />
 
                     </div>

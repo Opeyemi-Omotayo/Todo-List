@@ -1,8 +1,7 @@
-import React, { useContext, useState, CSSProperties } from 'react';
+import React, { useContext, CSSProperties } from 'react';
 import AppContext from '../../context/Index';
 import ClipLoader from "react-spinners/ClipLoader";
 import { motion } from 'framer-motion';
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 
 const override: CSSProperties = {
   display: "block",
@@ -11,7 +10,7 @@ const override: CSSProperties = {
 };
 
 const Tasks = ({currentTodos} : any) => {
-  const { handleCheckbox, handleTaskClick, todos, formatTime, loading, color } = useContext(AppContext);
+  const { handleCheckbox, handleTaskClick, formatTime, loading, color } = useContext(AppContext);
   
   const wrapper = {
     initial: { y: 1, opacity: 0 },
