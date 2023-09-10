@@ -1,9 +1,8 @@
-import React, { createContext, useState, useEffect, CSSProperties } from "react";
+import React, { createContext, useState, useEffect, useCallback } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import { format, set } from 'date-fns';
+import { format } from 'date-fns';
 import axios from "axios";
 import { Todo, AppContextProp } from "../types/types";
-import { toast } from "react-toastify";
 const AppContext = createContext<AppContextProp>(null!);
 
 export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
@@ -15,11 +14,11 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
   const [isEditTaskModalOpen, setIsEditTaskModalOpen] = useState(false);
   const [isTaskDetailsModalOpen, setIsTaskDetailsModalOpen] = useState(false);
+  const [calenderVisible, setCalenderVisible] = useState(false);
   const [snapPoints, setSnapPoints] = useState([1, 0.85]);
   const [loading, setLoading] = useState(true);
   const [color, setColor] = useState("#ffffff");
-
-
+  const saved = JSON.parse(localStorage.getItem("todos")!);
 
 
   const closeSheet = () => {
@@ -27,6 +26,13 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
     setIsEditTaskModalOpen(false);
     setIsTaskDetailsModalOpen(false);
   };
+
+  const showCalender = () => {
+    setCalenderVisible(true);
+    setAddTaskVisible(false);
+    setEditTaskVisible(false);
+    setTaskDetailsVisible(false);
+  }
 
   const getRandomDate = () => {
     const startDate = new Date(2023, 7, 1);
@@ -50,28 +56,16 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
     return formattedTime;
   }
 
-  useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}`)
-      .then((response) => {
-      setLoading(!loading)
-      setColor("#3F5BF6")
-      setTodos(
-        response.data.map((todo: Todo) => ({
-          ...todo,
-          date: getRandomDate(),
-          fromTime: getRandomTime(),
-          toTime: getRandomTime()
-        }))
-              )})
-      .catch((error) => console.log(error));
-  }, []);
+  // const sortArray = useCallback(() => {
+  //   const sortedArray = todos?.sort((a: Todo, b: Todo) => {
+  //     const dateA: Date = new Date(a.date);
+  //     const dateB: Date = new Date(b.date);
+  //     return dateB.getTime() - dateA.getTime();
+  //   });
+  //   return sortedArray;
+  // }, []);
 
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
-
-  const sortArray = () => {
+  const sortArray = (todos:any) => {
     let sortedArray = todos?.sort((a: Todo, b: Todo) => {
       const dateA: Date = new Date(a.date);
       const dateB: Date = new Date(b.date);
@@ -81,19 +75,73 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
   };
 
   useEffect(() => {
-    sortArray()
-  }, [todos])
+    axios
+      .get(`${process.env.REACT_APP_BACKEND_URL}`)
+      .then((response) => {
+      setLoading(false)
+      setColor("#3F5BF6")
+      const data = response.data.map((todo: Todo) => ({
+          ...todo,
+          date: getRandomDate(),
+          fromTime: getRandomTime(),
+          toTime: getRandomTime()
+        }))
+        if(!(saved && saved.length > 0)) {
+          const sortedData = sortArray(data)
+          setTodos(sortedData)
+        }
+        else{
+          setTodos(saved)
+        }
+              })
+      .catch((error) => console.log(error));
+  }, [loading]);
+
+    const addTask = (
+      title: string,
+      fromTime: Date | number | string,
+      toTime: Date | number | string,
+      date: any
+    ) => {
+      const newTask = {
+        id: uuidv4(),
+        userId: Math.floor(Math.random() * 5) + 1,
+        title: title,
+        fromTime: fromTime,
+        toTime: toTime,
+        date: date,
+        completed: false,
+      };
+      const newAdds = [...todos, newTask]
+      const sortedAddTask = sortArray(newAdds)
+    
+      setTodos(sortedAddTask);
+    }
+    
+  
+    useEffect(() => {
+      localStorage.setItem("todos", JSON.stringify(todos));
+    }, [todos]);
+  
+    useEffect(() => {
+      const saved = localStorage.getItem("todos");
+      if (saved) {
+        setTodos(JSON.parse(saved));
+      }
+    }, []);
+
 
   const toggleEditTaskVisibility = () => {
     if (window.innerWidth >= 1024) {
     setEditTaskVisible(true);
     setAddTaskVisible(false);
     setTaskDetailsVisible(false);
+    setCalenderVisible(false);
     } else{
       setIsEditTaskModalOpen(true);
     setIsAddTaskModalOpen(false);
     setIsTaskDetailsModalOpen(false);
-    setSnapPoints([1, 0.55]);
+    setSnapPoints([1, 0.75]);
     }
   };
 
@@ -102,33 +150,14 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
       setAddTaskVisible(true);
     setEditTaskVisible(false);
     setTaskDetailsVisible(false);
+    setCalenderVisible(false);
     } else {
       setIsAddTaskModalOpen(true);
     setIsEditTaskModalOpen(false);
     setIsTaskDetailsModalOpen(false);
-    setSnapPoints([1, 0.55]);
+    setSnapPoints([1, 0.75]);
     }
   };
-
-  const addTask = (
-    title: string,
-    fromTime: Date | number | string,
-    toTime: Date | number | string,
-    date: any
-  ) => {
-    setTodos([
-      ...todos,
-      {
-        id: uuidv4(),
-        userId: Math.floor(Math.random() * 5) + 1,
-        title: title,
-        fromTime: fromTime,
-        toTime: toTime,
-        date: date,
-        completed: false,
-      },
-    ]);
-  }
 
   const editTask = (taskId: number | string, updatedTask: Partial<Todo>) => {
     setTodos((prevTodos) =>
@@ -162,11 +191,12 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
     setTaskDetailsVisible(true);
     setEditTaskVisible(false);
     setAddTaskVisible(false);
+    setCalenderVisible(false);
     } else{
       setIsTaskDetailsModalOpen(true);
     setIsEditTaskModalOpen(false);
     setIsAddTaskModalOpen(false);
-    setSnapPoints([1, 0.55]);
+    setSnapPoints([1, 0.60]);
     }
   };
 
@@ -203,6 +233,9 @@ export const AppProvider: React.FC<AppContextProp> = ({ children }) => {
     formatTime,
     loading,
     color,
+    showCalender,
+    calenderVisible,
+    saved,
   };
   return (
     <AppContext.Provider value={contextData}>{children}</AppContext.Provider>

@@ -2,10 +2,11 @@ import React, {useContext} from 'react';
 import { TfiClose } from 'react-icons/tfi';
 import { AiOutlineCalendar, AiOutlineClockCircle } from 'react-icons/ai';
 import AppContext from '../../context/Index';
+import { toast } from 'react-toastify';
 
 
 const TaskDetails = () => {
-    const {deleteTask, toggleEditTaskVisibility, toggleAddTaskVisibility, selectedTask, closeSheet, formatTime} = useContext(AppContext);
+    const {deleteTask,toggleEditTaskVisibility, toggleAddTaskVisibility, showCalender ,selectedTask, closeSheet, formatTime} = useContext(AppContext);
     if (!selectedTask) {
         return null;
     }
@@ -14,7 +15,8 @@ const TaskDetails = () => {
         if (selectedTask.id) {
             deleteTask(selectedTask.id);
             closeSheet();
-            toggleAddTaskVisibility();
+            showCalender(); 
+            toast("Oops!, Task delected!")      
         }
     };
 
@@ -22,7 +24,7 @@ const TaskDetails = () => {
         <>
         <div className='flex flex-col p-6 lg:hidden'>
             <div className='flex items-end justify-end pb-2'>
-                <TfiClose className='text-lg font-bold text-black' onClick={closeSheet}/>
+                <TfiClose className='text-lg font-bold text-black cursor-pointer' onClick={closeSheet}/>
             </div>
             <h1 className='pb-8 text-lg font-bold'>{selectedTask.title}</h1>
             <p className='flex items-center pb-2'>
@@ -38,7 +40,7 @@ const TaskDetails = () => {
                     <AiOutlineClockCircle />
                 </span>
                 <span className='text-base font-medium'>
-                    {selectedTask.fromTime} - {selectedTask.toTime}
+                {formatTime(selectedTask.fromTime)} - {formatTime(selectedTask.toTime)}
                 </span>
             </p>
             <div className='flex items-center justify-between pt-8'>
@@ -48,7 +50,7 @@ const TaskDetails = () => {
         </div>
         <div className='flex-col hidden p-6 rounded-lg shadow-lg lg:flex '>
             <div className='flex items-end justify-end pb-2'>
-                <TfiClose className='text-lg font-bold text-black' onClick={toggleAddTaskVisibility}/>
+                <TfiClose className='text-lg font-bold text-black cursor-pointer' onClick={toggleAddTaskVisibility}/>
             </div>
             <h1 className='pb-8 text-lg font-bold'>{selectedTask.title}</h1>
             <p className='flex items-center pb-2'>

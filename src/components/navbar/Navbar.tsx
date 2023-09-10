@@ -8,7 +8,7 @@ const Navbar = () => {
     return (
         <>
             <nav className="font-mono ">
-                <div className="lg:flex hidden border-b shadow-sm  py-6 px-8 text-black items-center justify-between">
+                <div className="items-center justify-between hidden px-8 py-6 text-black border-b shadow-sm lg:flex xl:px-16">
                     <div className="flex items-center">
                         <h1 className="text-2xl font-bold">ToDo</h1>
                     </div>
@@ -26,22 +26,22 @@ const Navbar = () => {
                 </div>
 
                 {/* mobile */}
-                <div className="lg:hidden flex justify-between border-b shadow-sm items-center p-4 ">
+                <div className="flex items-center justify-between p-4 border-b shadow-sm lg:hidden ">
                     <ul
                         onClick={() => setNav(!nav)}
                         className={`absolute top-[65px] z-20 bg-gray-50 items-center w-full left-0 py-10 h-full ${nav ? "block" : "hidden"
                             }`}
                     >
                         <div className="flex flex-col h-[20rem] text-lg  items-center justify-between">
-                            <li className="cursor-pointer bg-white  py-2 px-4 flex items-center justify-center rounded-full">
+                            <li className="flex items-center justify-center px-4 py-2 bg-white rounded-full cursor-pointer">
                                 <img src="/assets/settings.png" alt="settings" width={45} />
                                 <span>Settings</span>
                             </li>
-                            <li className="cursor-pointer bg-white  py-2 px-4 flex items-center justify-center rounded-full">
+                            <li className="flex items-center justify-center px-4 py-2 bg-white rounded-full cursor-pointer">
                                 <img src="/assets/notification.png" alt="notification" width={45} />
                                 <span>Notification</span>
                             </li>
-                            <li className="cursor-pointer bg-black  p-2 w-32 flex items-center justify-center rounded-full">
+                            <li className="flex items-center justify-center w-32 p-2 bg-black rounded-full cursor-pointer">
                                 <img src="/assets/Avatar.png" alt="avatar"  width={35}/>
                             </li>
                         </div>
@@ -50,7 +50,7 @@ const Navbar = () => {
                         <h1 className="text-2xl font-bold">ToDo</h1>
                     </div>
                     <div
-                        className="lg:hidden block text-3xl"
+                        className="block text-3xl lg:hidden"
                         onClick={() => setNav(!nav)}
                     >
                         {!nav ? <CiMenuBurger /> : <TfiClose />}

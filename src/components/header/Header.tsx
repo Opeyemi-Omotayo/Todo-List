@@ -18,12 +18,12 @@ const Header = () => {
     return (
         <div>
             <Navbar />
-            <div className='flex items-center justify-between p-4 lg:p-8 '>
+            <div className='flex items-center justify-between p-4 lg:p-8 xl:px-16'>
                 <div>
-                    <h1 className='text-2xl md:text-3xl font-semibold'>{greeting}</h1>
+                    <h1 className='text-2xl font-semibold md:text-3xl'>{greeting}</h1>
                     <p className='text-[16px] text-grey'>You got some task to do. </p>
                 </div>
-                <button onClick={toggleAddTaskVisibility} className='bg-blue hidden  text-white lg:flex items-center py-3 px-4 rounded-lg shadow-md'>
+                <button onClick={toggleAddTaskVisibility} className='items-center hidden px-4 py-3 text-white rounded-lg shadow-md bg-blue lg:flex'>
                     <AiOutlinePlus className='mr-2'/>
                     <h1 className='text-[14px]'>Create New Task</h1>
                 </button>

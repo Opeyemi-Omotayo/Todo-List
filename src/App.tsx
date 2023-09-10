@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect } from 'react';
+import React, { SetStateAction } from 'react';
 import { ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AppProvider } from './context/Index';
@@ -6,6 +6,7 @@ import HomePage from './page/HomePage';
 import { Todo } from './types/types';
 
 function App() {
+ 
   return (
     <div>
       <AppProvider 
@@ -49,7 +50,11 @@ function App() {
           throw new Error("Unable to format time!");
         }}
         loading={false}
-        color={undefined}
+        color={"#3F5BF6"}
+        showCalender={function ():void {
+          throw new Error("Unable to open calender!")
+        }}
+        calenderVisible={false}
         >
         <HomePage />
       </AppProvider>

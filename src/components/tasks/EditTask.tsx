@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 
 const EditTask = () => {
-    const { toggleAddTaskVisibility, selectedTask, editTask, closeSheet} = useContext(AppContext);
+    const { showCalender, selectedTask, editTask, closeSheet} = useContext(AppContext);
     const [title, setTitle] = useState(selectedTask?.title || '');
     const [toTime, setToTime] = useState(selectedTask?.toTime || '');
     const [fromTime, setFromTime] = useState(selectedTask?.fromTime || '');
@@ -22,11 +22,11 @@ const EditTask = () => {
             return;
         } 
         if (!toTime || !fromTime) {
-            toast("please enter time!");
+            toast("please select time!");
             return;
         }  
         if(!date){
-            toast("please enter date!");
+            toast("please select date!");
             return;
         }
         editTask(selectedTask.id, {
@@ -39,6 +39,12 @@ const EditTask = () => {
         setFromTime("");
         setToTime("");
         setDate("");
+        toast("Task edited successfully!")
+        if (window.innerWidth >= 1024) {
+            showCalender();
+        }else{
+            closeSheet()
+        }
       };
     
 
@@ -95,7 +101,7 @@ const EditTask = () => {
         <div className='flex-col hidden p-6 rounded-lg shadow-lg lg:flex '>
             <div className='flex items-center justify-between pb-8'>
                 <h1 className='text-lg font-bold'>Edit Task</h1>
-                <TfiClose className='text-black cursor-pointer ' onClick={toggleAddTaskVisibility}/>
+                <TfiClose className='text-black cursor-pointer ' onClick={showCalender}/>
             </div>
             <textarea
                 id=""
@@ -135,7 +141,7 @@ const EditTask = () => {
                 <TfiClose className='text-xs font-bold cursor-pointer' />
             </div>
             <div className='flex items-center justify-between pt-8'>
-                <button onClick={toggleAddTaskVisibility} className='border rounded-lg shadow-sm w-[48%] py-2'>Cancel</button>
+                <button onClick={showCalender} className='border rounded-lg shadow-sm w-[48%] py-2'>Cancel</button>
                 <button onClick={handleEditClick} className='bg-blue text-white shadow-sm rounded-lg w-[48%] py-2'>Save</button>
             </div>
 

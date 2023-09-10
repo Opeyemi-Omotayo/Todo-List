@@ -50,7 +50,7 @@ export const Calender = ({
   return (
     <div
       className={classNames(
-        "w-full py-[20px] sm:border shadow-lg border-gray-50  px-6  max-w-md gap-2 flex flex-col rounded-lg",
+        "w-full py-[20px] sm:border shadow-lg border-gray-50  px-4  max-w-md gap-2 flex flex-col rounded-lg",
         sectionClasses
       )}
     >
@@ -82,7 +82,7 @@ export const Calender = ({
         </div>
       </header>
       <section className='flex flex-col'>
-        <header className='grid  grid-cols-7 '>
+        <header className='grid grid-cols-7 '>
           {days.map((day) => {
             return (
               <h3
@@ -94,7 +94,7 @@ export const Calender = ({
             );
           })}
         </header>
-        <ul className='grid grid-cols-7  grid-rows-5 gap-1'>
+        <ul className='grid grid-cols-7 grid-rows-5 gap-1'>
           {newDays.map((date) => (
             <li key={date.toISOString()}>
               <button

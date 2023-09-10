@@ -6,7 +6,10 @@ module.exports = {
       colors:{
         "grey": " #475467",
         "blue": "#3F5BF6",
-      }
+      },
+      fontFamily:{
+        workSans:['Work Sans', 'sans-serif'],
+      },
     },
   },
   plugins: [

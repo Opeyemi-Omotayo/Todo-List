@@ -9,7 +9,7 @@ const AddTask = () => {
     const [toTime, setToTime] = useState("");
     const [fromTime, setFromTime] = useState("");
     const [date, setDate] = useState("");
-    const { addTask, closeSheet } = useContext(AppContext);
+    const { addTask, closeSheet, showCalender } = useContext(AppContext);
 
     const handleAddTask = () => {
         if (!title) {
@@ -29,6 +29,8 @@ const AddTask = () => {
         setFromTime("");
         setToTime("");
         setDate("");
+        toast("Task added successfully!")
+        showCalender();
     }
 
 
@@ -89,7 +91,7 @@ const AddTask = () => {
             <div className='flex-col hidden p-6 rounded-lg shadow-lg lg:flex'>
                 <div className='flex items-center justify-between pb-8'>
                     <h1 className='text-lg font-bold'>Add Task</h1>
-                    <TfiClose className='text-black cursor-pointer ' />
+                    <TfiClose className='text-black cursor-pointer ' onClick={showCalender} />
                 </div>
                 <textarea
                     id=""
@@ -129,7 +131,7 @@ const AddTask = () => {
                     <TfiClose className='text-xs font-bold cursor-pointer' />
                 </div>
                 <div className='flex items-center justify-between pt-8'>
-                    <button className='border rounded-lg shadow-sm w-[48%] py-2'>Cancel</button>
+                    <button onClick={showCalender} className='border rounded-lg shadow-sm w-[48%] py-2'>Cancel</button>
                     <button onClick={handleAddTask} className='bg-blue text-white shadow-sm rounded-lg w-[48%] py-2'>Add</button>
                 </div>
 

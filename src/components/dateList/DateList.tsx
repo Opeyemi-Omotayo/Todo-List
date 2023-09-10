@@ -1,36 +1,50 @@
-import React from "react";
-import { format, addDays, isToday } from "date-fns";
+import {
+  eachDayOfInterval,
+  endOfMonth,
+  format,
+  isEqual,
+  startOfMonth,
+} from "date-fns";
+import { useMemo } from "react";
+import { classNames } from "../../micro/calender";
 
-const DateList = () => {
-  const numberOfDays = 15;
-  const currentDate = new Date();
-  const currentMonthYear = format(currentDate, "MMMM yyyy");
+interface CalenderProps {
+  date: Date;
+  setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
+}
 
-  const dateArray = Array.from({ length: numberOfDays }, (_, index) => {
-    const date = addDays(currentDate, index);
-    return date;
-  });
+const DateList = ({ date, setSelectedDate }: CalenderProps) => {
+  
+  const daysInMonth = useMemo(() => {
+    return eachDayOfInterval({
+      start: startOfMonth(date),
+      end: endOfMonth(date),
+    });
+  }, [date]);
 
   return (
-    <div className="px-4 lg:px-8">
-      <p className="text-sm font-semibold mb-4">{currentMonthYear}</p>
-      <ul className="w-full overflow-x-auto pb-2 scrollbar-none sm:scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-blue scrollbar-track-gray-100 flex gap-[16px]">
-        {dateArray.map((date, index) => (
-          <li key={index} className="text-center ">
-            <div className={`text-sm font-semibold w-[55px] py-2 text-grey rounded-lg shadow-sm border ${isToday(date) ? "bg-blue text-white" : ""
-              }`}>
-              <p >
-                {format(date, "EEE").toUpperCase()}
-              </p>
-              <p>
-                {format(date, "dd")}
-              </p>
-            </div>
+    <div className='flex flex-col w-full gap-4 px-4 lg:px-8 xl:pl-16'>
+      <h3 className='leading-6 text-[#101828] font-semibold'>
+        {format(date, "MMMM yyyy")}
+      </h3>
+      <ul className='w-full overflow-x-auto pb-2 scrollbar-none sm:scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-[blue] scrollbar-track-gray-100 flex gap-[16px]'>
+        {daysInMonth.map((day) => (
+          <li key={day.toISOString()} className='min-w-[62px] w-full'>
+            <button
+              onClick={() => setSelectedDate(day)}
+              className={classNames(
+                "border w-full items-center justify-around h-[68px] rounded-lg flex text-sm py-[10px] flex-col gap-2 ",
+                isEqual(day, date) && "bg-blue text-white"
+              )}
+            >
+              <span>{format(day, "E")}</span>
+              <span>{format(day, "dd")}</span>
+            </button>
           </li>
         ))}
       </ul>
     </div>
-  );
+  )
 };
 
 export default DateList;

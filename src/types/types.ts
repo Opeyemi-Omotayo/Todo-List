@@ -31,5 +31,7 @@ export interface AppContextProp {
     formatTime: (timeString:any) => any,
     loading: boolean,
     color: any,
+    showCalender: () => void,
+    calenderVisible: boolean,
 
 }

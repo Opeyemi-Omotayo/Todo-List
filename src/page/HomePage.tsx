@@ -14,7 +14,7 @@ import Sheet from 'react-modal-sheet';
 
 
 const HomePage = () => {
-  const { editTaskVisible, addTaskVisible, taskDetailsVisible, snapPoints, closeSheet,isTaskDetailsModalOpen ,isAddTaskModalOpen, isEditTaskModalOpen  } = useContext(AppContext);
+  const { editTaskVisible, addTaskVisible, taskDetailsVisible, snapPoints, calenderVisible ,closeSheet,isTaskDetailsModalOpen ,isAddTaskModalOpen, isEditTaskModalOpen  } = useContext(AppContext);
   const [selectedDate, setSelectedDate] = useState(startOfDay(new Date()));
 
   return (
@@ -37,16 +37,16 @@ const HomePage = () => {
         </Sheet.Container>
         <Sheet.Backdrop />
       </Sheet>
-    <div>
+    <div className="font-workSans">
       <Header />
-      <div className='flex'>
+      <div className='flex' >
         <div className='w-full lg:w-[68%] '>
-          <DateList />
+          <DateList setSelectedDate={setSelectedDate} date={selectedDate}/>
           <Tasks />
           <MobileInput />
         </div>
-        <div className='hidden lg:block lg:w-[29%] border-l pl-8'>
-          {!editTaskVisible && !taskDetailsVisible && !addTaskVisible && <Calender selectedDate={selectedDate} setSelectedDate={setSelectedDate} />}
+        <div className='hidden lg:block lg:w-[29%] border-l pl-8 xl:pr-6'>
+          {calenderVisible || (!editTaskVisible && !taskDetailsVisible && !addTaskVisible) ? (<Calender selectedDate={selectedDate} setSelectedDate={setSelectedDate} />) : ""}
           {taskDetailsVisible && <TaskDetails />}
           {editTaskVisible && <EditTask />}
           {addTaskVisible && <AddTask />}
