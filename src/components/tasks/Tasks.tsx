@@ -1,13 +1,8 @@
-import React, { useContext, CSSProperties } from 'react';
+import React, { useContext } from 'react';
 import AppContext from '../../context/Index';
-import ClipLoader from "react-spinners/ClipLoader";
 import { motion } from 'framer-motion';
+import { Spinner} from '@chakra-ui/react';
 
-const override: CSSProperties = {
-  display: "block",
-  margin: "0 auto",
-  borderColor: "blue",
-};
 
 const Tasks = ({currentTodos} : any) => {
   const { handleCheckbox, handleTaskClick, formatTime, loading, color } = useContext(AppContext);
@@ -35,14 +30,10 @@ const Tasks = ({currentTodos} : any) => {
   return (
     <div className="px-4 py-8 lg:px-8 xl:pl-16 font-workSans">
       <h1 className='text-base font-semibold pb-8'>My Tasks</h1>
-      <ClipLoader
-        color={color}
-        loading={loading}
-        cssOverride={override}
-        size={150}
-        aria-label="Loading Spinner"
-        data-testid="loader"
-      />
+     {loading && <div className='flex items-center justify-center h-[200px]'>
+      <Spinner className='text-blue'/>
+     </div>
+     }
       <motion.ul
         variants={wrapper}
         initial='initial'

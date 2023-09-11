@@ -1,12 +1,14 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import { TfiClose } from 'react-icons/tfi';
 import { AiOutlineCalendar, AiOutlineClockCircle } from 'react-icons/ai';
 import AppContext from '../../context/Index';
 import { toast } from 'react-toastify';
+import DeleteModal from '../modal/DeleteModal';
 
 
 const TaskDetails = () => {
     const {deleteTask,toggleEditTaskVisibility, showCalender ,selectedTask, closeSheet, formatTime} = useContext(AppContext);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     if (!selectedTask) {
         return null;
     }
@@ -19,9 +21,17 @@ const TaskDetails = () => {
             toast("Task deleted!")      
         }
     };
+    
 
     return (
-        <>
+        <> 
+        <div className="mx-8 lg:mx-0">
+        <DeleteModal
+          isOpen={isDeleteModalOpen}
+          onClose={() => setIsDeleteModalOpen(false)}
+          onDelete={handleDeleteClick}
+        />
+        </div>
         <div className='flex flex-col p-6 lg:hidden'>
             <div className='flex items-end justify-end pb-2'>
                 <TfiClose className='text-lg font-bold text-black cursor-pointer' onClick={closeSheet}/>
@@ -44,7 +54,7 @@ const TaskDetails = () => {
                 </span>
             </p>
             <div className='flex items-center justify-between pt-8'>
-                <button onClick={handleDeleteClick} className='border rounded-lg shadow-sm w-[48%] py-2'>Delete</button>
+                <button onClick={() => setIsDeleteModalOpen(true)} className='border rounded-lg shadow-sm w-[48%] py-2'>Delete</button>
                 <button onClick={toggleEditTaskVisibility } className='bg-blue text-white shadow-sm rounded-lg w-[48%] py-2'>Edit</button>
             </div>
         </div>
@@ -70,7 +80,7 @@ const TaskDetails = () => {
                 </span>
             </p>
             <div className='flex items-center justify-between pt-8'>
-                <button onClick={handleDeleteClick} className='border rounded-lg shadow-sm w-[48%] py-2'>Delete</button>
+                <button onClick={() => setIsDeleteModalOpen(true)} className='border rounded-lg shadow-sm w-[48%] py-2'>Delete</button>
                 <button onClick={toggleEditTaskVisibility } className='bg-blue text-white shadow-sm rounded-lg w-[48%] py-2'>Edit</button>
             </div>
         </div>

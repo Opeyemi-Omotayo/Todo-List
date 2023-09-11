@@ -14,15 +14,11 @@ import {
 } from "date-fns";
 import { useMemo, useState } from "react";
 import { classNames } from "../../micro/calender";
+import { CalenderProps } from "../../types/types";
 
 const days = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
 
-interface CalenderProps {
-  selectedDate: Date;
-  setSelectedDate: (date: Date) => void;
-  sectionClasses?: string;
-  setShowingDatePicker?: React.Dispatch<React.SetStateAction<boolean>>;
-}
+
 
 export const Calender = ({
   selectedDate,

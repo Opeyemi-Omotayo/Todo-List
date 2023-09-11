@@ -8,6 +8,24 @@ export type Todo = {
     userId: number
 }
 
+export interface DeleteModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    onDelete?: () => void;
+}
+
+export interface CalenderProps {
+    selectedDate: Date;
+    setSelectedDate: (date: Date) => void;
+    sectionClasses?: string;
+    setShowingDatePicker?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface DateListProps {
+  date: Date;
+  setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
+}
+
 export interface AppContextProp {
     children?: React.ReactNode,
     toggleEditTaskVisibility: () => void,
@@ -33,5 +51,5 @@ export interface AppContextProp {
     color: any,
     showCalender: () => void,
     calenderVisible: boolean,
-
+    
 }

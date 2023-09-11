@@ -7,13 +7,11 @@ import {
 } from "date-fns";
 import { useMemo } from "react";
 import { classNames } from "../../micro/calender";
+import { DateListProps } from "../../types/types";
 
-interface CalenderProps {
-  date: Date;
-  setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
-}
 
-const DateList = ({ date, setSelectedDate }: CalenderProps) => {
+
+const DateList = ({ date, setSelectedDate }: DateListProps) => {
   
   const daysInMonth = useMemo(() => {
     return eachDayOfInterval({
