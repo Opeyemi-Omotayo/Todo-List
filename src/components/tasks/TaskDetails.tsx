@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 
 const TaskDetails = () => {
-    const {deleteTask,toggleEditTaskVisibility, toggleAddTaskVisibility, showCalender ,selectedTask, closeSheet, formatTime} = useContext(AppContext);
+    const {deleteTask,toggleEditTaskVisibility, showCalender ,selectedTask, closeSheet, formatTime} = useContext(AppContext);
     if (!selectedTask) {
         return null;
     }
@@ -16,7 +16,7 @@ const TaskDetails = () => {
             deleteTask(selectedTask.id);
             closeSheet();
             showCalender(); 
-            toast("Oops!, Task delected!")      
+            toast("Task deleted!")      
         }
     };
 

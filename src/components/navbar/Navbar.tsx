@@ -42,7 +42,7 @@ const Navbar = () => {
                                 <span>Notification</span>
                             </li>
                             <li className="flex items-center justify-center w-32 p-2 bg-black rounded-full cursor-pointer">
-                                <img src="/assets/Avatar.png" alt="avatar"  width={45}/>
+                                <img src="/assets/avatar.png" alt="avatar"  width={45}/>
                             </li>
                         </div>
                     </ul>

@@ -6,8 +6,8 @@ import { toast } from 'react-toastify';
 
 const AddTask = () => {
     const [title, setTitle] = useState("");
-    const [toTime, setToTime] = useState("");
-    const [fromTime, setFromTime] = useState("");
+    const [toTime, setToTime] = useState("00:00");
+    const [fromTime, setFromTime] = useState("00:00");
     const [date, setDate] = useState("");
     const { addTask, closeSheet, showCalender } = useContext(AppContext);
 
@@ -17,11 +17,11 @@ const AddTask = () => {
             return;
         }
         if (!toTime || !fromTime) {
-            toast("please enter time!");
+            toast("please select time!");
             return;
         }
         if (!date) {
-            toast("please enter date!");
+            toast("please select date!");
             return;
         }
         addTask(title, toTime, fromTime, date);
