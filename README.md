@@ -2,7 +2,7 @@
 
 ## About
 
-A simple ToDo list web application built with the latest technologies such as React, Typescript, TailwindCSS, React Modal Sheet, Framer Motion,React Paginate, React-toastify, React icons and React Spinners. This app allows users to manage their tasks and keep track of their daily activities.
+A simple ToDo list web application built with the latest technologies such as React, Typescript, TailwindCSS, React Modal Sheet, Framer Motion, Chakra-Ui , React Paginate, React-toastify and React icons. This app allows users to manage their tasks and keep track of their daily activities.
 
 ## Technologies Used
 
@@ -14,7 +14,7 @@ A simple ToDo list web application built with the latest technologies such as Re
 - React paginate for pagination
 - Context for state mgt
 - React Icons
-- React Spinners
+- Chakra-ui
 - React Toastify 
 
 
