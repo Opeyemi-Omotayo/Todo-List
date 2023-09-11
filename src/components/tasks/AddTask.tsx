@@ -24,7 +24,7 @@ const AddTask = () => {
             toast("please select date!");
             return;
         }
-        addTask(title, toTime, fromTime, date);
+        addTask(title, fromTime, toTime, date);
         setTitle("");
         setFromTime("");
         setToTime("");
