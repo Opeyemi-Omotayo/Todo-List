@@ -20,7 +20,6 @@ function PaginatedItems({ itemsPerPage }: any) {
       `User requested page number ${event.selected}, which is offset ${newOffset}`
     );
     setItemOffset(newOffset);
-    console.log(itemOffset)
   };
 
   return (
